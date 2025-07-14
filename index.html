@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Interactiva - Nutrición y Dietética</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Plan de Estudios 2023 – Nutrición y Dietética</h1>
+  <div id="grid" class="grid-container">
+    <!-- Ejemplo de un ramo -->
+    <div class="ramo" id="bioGeneral" data-code="BIOG" data-prereqs="">
+      Biología General
+    </div>
+    <div class="ramo" id="labBioGeneral" data-code="LABG" data-prereqs="BIOG">
+      Lab. de Biología
+    </div>
+    <div class="ramo" id="morfologia" data-code="MORF" data-prereqs="BIOG">
+      Morfología
+    </div>
+    <!-- Agrega aquí más ramos según tu pensum -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
