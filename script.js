@@ -1,51 +1,45 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const ramos = document.querySelectorAll(".ramo");
+// script.js
 
-  ramos.forEach(ramo => {
-    // Inicialmente, todos los ramos están deshabilitados visualmente
-    ramo.classList.add("deshabilitado");
+document.addEventListener("DOMContentLoaded", () => { const ramos = document.querySelectorAll(".ramo"); const aprobadas = new Set();
 
-    const prereqs = ramo.dataset.prereqs;
-    if (!prereqs) {
-      // Si no tiene requisitos, se marca como habilitado (color morado)
-      ramo.classList.remove("deshabilitado");
-      ramo.classList.add("habilitado");
-    }
+// Inicializa todos los ramos como grises ramos.forEach(ramo => { ramo.classList.add("gris"); });
 
-    ramo.addEventListener("click", () => {
-      if (ramo.classList.contains("aprobado")) return;
+// Agrega evento de clic ramos.forEach(ramo => { ramo.addEventListener("click", () => { const code = ramo.dataset.code; const prereqs = ramo.dataset.prereqs; const yaAprobado = aprobadas.has(code);
 
-      const prereqs = ramo.dataset.prereqs;
-      if (prereqs) {
-        const codes = prereqs.split(',');
-        const aprobados = codes.every(code => {
-          const req = document.querySelector(`[data-code="${code}"]`);
-          return req && req.classList.contains("aprobado");
-        });
-        if (!aprobados) {
-          alert("Debes aprobar los requisitos previos primero.");
-          return;
-        }
-      }
+// Si ya fue aprobado, lo quitamos
+  if (yaAprobado) {
+    aprobadas.delete(code);
+    ramo.classList.remove("aprobada");
+    ramo.classList.add("gris");
+    // Reinicializa todos y vuelve a evaluar
+    ramos.forEach(r => r.classList.add("gris"));
+    actualizarEstado();
+    return;
+  }
 
-      ramo.classList.remove("habilitado");
-      ramo.classList.add("aprobado");
-
-      // Después de aprobar, revisar si desbloquea otros
-      ramos.forEach(r => {
-        const requisitos = r.dataset.prereqs;
-        if (!requisitos || r.classList.contains("aprobado")) return;
-
-        const todosCumplidos = requisitos.split(',').every(code => {
-          const req = document.querySelector(`[data-code="${code}"]`);
-          return req && req.classList.contains("aprobado");
-        });
-
-        if (todosCumplidos && r.classList.contains("deshabilitado")) {
-          r.classList.remove("deshabilitado");
-          r.classList.add("habilitado");
-        }
-      });
-    });
-  });
+  // Si no tiene prerequisitos o ya están todos aprobados
+  if (!prereqs || prereqs.split(',').every(p => aprobadas.has(p.trim()))) {
+    aprobadas.add(code);
+    ramo.classList.remove("gris", "desbloqueada");
+    ramo.classList.add("aprobada");
+    actualizarEstado();
+  } else {
+    alert("Debes aprobar los prerrequisitos primero: " + prereqs);
+  }
 });
+
+});
+
+function actualizarEstado() { ramos.forEach(ramo => { const code = ramo.dataset.code; const prereqs = ramo.dataset.prereqs; const yaAprobado = aprobadas.has(code);
+
+if (!yaAprobado && prereqs) {
+    const listo = prereqs.split(',').every(p => aprobadas.has(p.trim()));
+    if (listo) {
+      ramo.classList.remove("gris");
+      ramo.classList.add("desbloqueada");
+    }
+  }
+});
+
+} });
+
