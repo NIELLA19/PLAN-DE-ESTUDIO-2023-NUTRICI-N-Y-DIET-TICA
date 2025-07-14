@@ -20,23 +20,27 @@ function updateRamos() {
     const prereqs = ramo.dataset.prereqs;
 
     if (!prereqs) {
-      // Materias SIN prerrequisitos → están activas desde el inicio
+      // Materias SIN prerrequisitos → se marcan como iniciales (morado claro)
+      ramo.classList.remove("bloqueado");
       ramo.classList.remove("inactivo");
-      ramo.classList.add("bloqueado");
+      ramo.classList.add("inicial");
       ramo.style.pointerEvents = "auto";
     } else {
+      // Materias CON prerrequisitos → verificar si se cumplen
       const codes = prereqs.split(",");
       const requisitosCumplidos = codes.every(code =>
         document.querySelector(`.ramo[data-code="${code}"]`)?.classList.contains("completado")
       );
 
       if (requisitosCumplidos) {
-        ramo.classList.remove("inactivo");
         ramo.classList.remove("bloqueado");
+        ramo.classList.remove("inactivo");
+        ramo.classList.remove("inicial");
         ramo.style.pointerEvents = "auto";
       } else {
+        ramo.classList.remove("inicial");
+        ramo.classList.add("bloqueado");
         ramo.classList.add("inactivo");
-        ramo.classList.remove("bloqueado");
         ramo.style.pointerEvents = "none";
       }
     }
