@@ -1,63 +1,26 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #fff;
-  margin: 20px;
-  color: #333;
-}
+/* style.css */
 
-h1 {
-  text-align: center;
-  margin-bottom: 40px;
-  color: #5e388c;
-}
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f8ff; color: #333; padding: 2rem; margin: 0; }
 
-.grid-semestres {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 10px;
-}
+h1 { text-align: center; color: #5e35b1; }
 
-.semestre {
-  min-width: 220px;
-  flex: 0 0 auto;
-  background-color: #f8f8f8;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-}
+.grid-semestres { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
 
-.semestre h2 {
-  text-align: center;
-  font-size: 1.2em;
-  color: #7e57c2;
-  margin-bottom: 10px;
-}
+.semestre { background-color: #f3e5f5; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
 
-.ramo {
-  background-color: #ddd; /* bloqueado */
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  font-size: 0.95em;
-  text-align: center;
-}
+.semestre h2 { text-align: center; color: #6a1b9a; font-size: 1.2rem; margin-bottom: 1rem; }
 
-.ramo:hover {
-  transform: scale(1.03);
-}
+.ramo { background-color: #e0e0e0; /* Estado inicial: gris */ border: 1px solid #ccc; padding: 0.7rem; margin-bottom: 0.6rem; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
 
-.ramo.aprobada {
-  background-color: #f7c8e0; /* rosa claro */
-  color: #4a004d;
-  font-weight: bold;
-}
+.ramo.aprobada { background-color: #f8bbd0; /* Rosa claro */ border-color: #f48fb1; }
 
-.ramo.desbloqueada {
-  background-color: #d3bff0; /* lila */
-  color: #3a2c5a;
-}
+.ramo.desbloqueada { background-color: #ce93d8; /* Morado claro */ border-color: #ba68c8; }
+
+.ramo.gris { background-color: #e0e0e0; color: #777; }
+
+.ramo:hover { transform: scale(1.03); }
+
+/* Botón de reinicio */ .reset-button { margin: 1rem auto; display: block; padding: 0.6rem 1.2rem; background-color: #ccc; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+.reset-button:hover { background-color: #bbb; }
+
