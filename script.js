@@ -1,47 +1,64 @@
-// Función para manejar los clics en materias
-document.querySelectorAll('.ramo').forEach(ramo => {
-  ramo.addEventListener('click', () => {
-    if (ramo.classList.contains('activa')) return;
+document.addEventListener("DOMContentLoaded", () => {
+  const ramos = document.querySelectorAll(".ramo");
 
-    const prereqs = ramo.dataset.prereqs;
-    if (prereqs) {
-      const prereqList = prereqs.split(',');
-      const allApproved = prereqList.every(code =>
-        document.querySelector(`.ramo[data-code="${code}"]`)?.classList.contains('activa')
-      );
-      if (!allApproved) {
-        alert('Debes aprobar todos los prerrequisitos para seleccionar esta materia.');
-        return;
-      }
-    }
-
-    ramo.classList.add('activa');
-    saveState();
+  ramos.forEach((ramo) => {
+    ramo.addEventListener("click", () => {
+      toggleRamo(ramo);
+      updateAllRamos();
+    });
   });
+
+  loadState();
+  updateAllRamos();
 });
 
-// Guardar materias seleccionadas en localStorage
-function saveState() {
-  const selected = [...document.querySelectorAll('.ramo.activa')].map(r => r.dataset.code);
-  localStorage.setItem('materiasActivas', JSON.stringify(selected));
+function toggleRamo(ramo) {
+  ramo.classList.toggle("completado");
+  saveState();
 }
 
-// Cargar materias guardadas
-function loadState() {
-  const stored = JSON.parse(localStorage.getItem('materiasActivas') || '[]');
-  stored.forEach(code => {
-    const ramo = document.querySelector(`.ramo[data-code="${code}"]`);
-    if (ramo) {
-      ramo.classList.add('activa');
+function updateAllRamos() {
+  const allRamos = document.querySelectorAll(".ramo");
+
+  allRamos.forEach((ramo) => {
+    const prereqs = ramo.dataset.prereqs;
+    if (prereqs) {
+      const codes = prereqs.split(",");
+      const allMet = codes.every((code) =>
+        document.querySelector(`.ramo[data-code="${code}"]`)?.classList.contains("completado")
+      );
+      ramo.style.opacity = allMet ? "1" : "0.4";
+      ramo.style.pointerEvents = allMet ? "auto" : "none";
+    } else {
+      ramo.style.opacity = "1";
+      ramo.style.pointerEvents = "auto";
     }
   });
 }
 
-// Reiniciar la malla
-function resetMalla() {
-  document.querySelectorAll('.ramo').forEach(r => r.classList.remove('activa'));
-  localStorage.removeItem('materiasActivas');
+function saveState() {
+  const estado = {};
+  document.querySelectorAll(".ramo").forEach((ramo) => {
+    const code = ramo.dataset.code;
+    estado[code] = ramo.classList.contains("completado");
+  });
+  localStorage.setItem("estadoRamos", JSON.stringify(estado));
 }
 
-// Cargar el estado al iniciar
-document.addEventListener('DOMContentLoaded', loadState);
+function loadState() {
+  const estado = JSON.parse(localStorage.getItem("estadoRamos") || "{}");
+  document.querySelectorAll(".ramo").forEach((ramo) => {
+    const code = ramo.dataset.code;
+    if (estado[code]) {
+      ramo.classList.add("completado");
+    }
+  });
+}
+
+function resetMalla() {
+  localStorage.removeItem("estadoRamos");
+  document.querySelectorAll(".ramo").forEach((ramo) => {
+    ramo.classList.remove("completado");
+  });
+  updateAllRamos();
+}
