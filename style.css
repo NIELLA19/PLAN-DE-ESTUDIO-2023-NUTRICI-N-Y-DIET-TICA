@@ -1,22 +1,63 @@
-/* style.css */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  margin: 20px;
+  color: #333;
+}
 
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf7ff; color: #333; padding: 20px; margin: 0; }
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #5e388c;
+}
 
-h1 { text-align: center; color: #6a1b9a; font-size: 26px; margin-bottom: 30px; }
+.grid-semestres {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px;
+}
 
-.grid-semestres { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 20px; padding-bottom: 30px; }
+.semestre {
+  min-width: 220px;
+  flex: 0 0 auto;
+  background-color: #f8f8f8;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
 
-.semestre { background-color: #f5e6ff; border-radius: 10px; padding: 10px; min-width: 220px; box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); flex-shrink: 0; }
+.semestre h2 {
+  text-align: center;
+  font-size: 1.2em;
+  color: #7e57c2;
+  margin-bottom: 10px;
+}
 
-.semestre h2 { text-align: center; color: #5a008a; font-size: 18px; margin-bottom: 12px; }
+.ramo {
+  background-color: #ddd; /* bloqueado */
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 0.95em;
+  text-align: center;
+}
 
-.ramo { padding: 10px; margin-bottom: 8px; border-radius: 8px; font-size: 14px; font-weight: 500; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; background-color: #e0e0e0; color: #333; }
+.ramo:hover {
+  transform: scale(1.03);
+}
 
-.ramo.gris { background-color: #e0e0e0; color: #555; }
+.ramo.aprobada {
+  background-color: #f7c8e0; /* rosa claro */
+  color: #4a004d;
+  font-weight: bold;
+}
 
-.ramo.aprobada { background-color: #f9c6d0; color: #4a0033; border: 2px solid #f38ca3; }
-
-.ramo.desbloqueada { background-color: #e6ccff; color: #30004d; border: 2px dashed #a078ff; }
-
-.ramo:hover { opacity: 0.9; transform: scale(1.02); }
-
+.ramo.desbloqueada {
+  background-color: #d3bff0; /* lila */
+  color: #3a2c5a;
+}
