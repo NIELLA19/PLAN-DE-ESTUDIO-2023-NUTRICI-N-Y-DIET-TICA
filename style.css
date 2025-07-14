@@ -54,7 +54,7 @@ h1 {
   color: #333;
 }
 
-/* Materias CON prerrequisitos NO cumplidos (gris y bloqueadas) */
+/* Materias bloqueadas por prerrequisitos no cumplidos */
 .ramo.bloqueado {
   background-color: #ddd;
   color: #888;
