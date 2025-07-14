@@ -1,53 +1,85 @@
+// script.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const ramos = document.querySelectorAll(".ramo");
+  const aprobadas = new Set(JSON.parse(localStorage.getItem("aprobadas") || "[]"));
 
-  function actualizarEstados() {
-    ramos.forEach(ramo => {
-      if (ramo.classList.contains("aprobada")) return;
+  // Inicializa estado desde localStorage
+  ramos.forEach(ramo => {
+    const code = ramo.dataset.code;
+    ramo.classList.add("gris");
+    if (aprobadas.has(code)) {
+      ramo.classList.remove("gris");
+      ramo.classList.add("aprobada");
+    }
+  });
 
-      const prereqs = ramo.dataset.prereqs;
-
-      if (!prereqs) {
-        ramo.classList.add("desbloqueada");
-        return;
-      }
-
-      if (prereqs === "ALL") {
-        const index = Array.from(ramos).indexOf(ramo);
-        const anteriores = Array.from(ramos).slice(0, index);
-        const allApproved = anteriores.every(r => r.classList.contains("aprobada"));
-        if (allApproved) ramo.classList.add("desbloqueada");
-        return;
-      }
-
-      if (prereqs === "SEM8") {
-        const sem8 = document.querySelectorAll('[data-code="COLECTIVOS"], [data-code="CLINICA"]');
-        const allSem8 = Array.from(sem8).every(r => r.classList.contains("aprobada"));
-        if (allSem8) ramo.classList.add("desbloqueada");
-        return;
-      }
-
-      const codes = prereqs.split(',');
-      const aprobados = codes.every(code => {
-        const req = document.querySelector(`[data-code="${code}"]`);
-        return req && req.classList.contains("aprobada");
-      });
-
-      if (aprobados) ramo.classList.add("desbloqueada");
-    });
-  }
+  actualizarEstado();
 
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
-      if (!ramo.classList.contains("desbloqueada") && !ramo.classList.contains("aprobada")) return;
+      const code = ramo.dataset.code;
+      const prereqs = ramo.dataset.prereqs;
+      const yaAprobado = ramo.classList.contains("aprobada");
 
-      ramo.classList.toggle("aprobada");
-      ramo.classList.remove("desbloqueada");
+      if (yaAprobado) {
+        aprobadas.delete(code);
+        ramo.classList.remove("aprobada");
+        ramo.classList.add("gris");
+      } else {
+        if (!prereqs || prereqs.split(",").every(p => aprobadas.has(p.trim()))) {
+          aprobadas.add(code);
+          ramo.classList.remove("gris", "desbloqueada");
+          ramo.classList.add("aprobada");
+        } else {
+          alert("Debes aprobar los prerrequisitos: " + prereqs);
+        }
+      }
 
-      ramos.forEach(r => r.classList.remove("desbloqueada"));
-      actualizarEstados();
+      guardarEstado();
+      actualizarEstado();
     });
   });
 
-  actualizarEstados();
+  function actualizarEstado() {
+    ramos.forEach(ramo => {
+      const code = ramo.dataset.code;
+      const prereqs = ramo.dataset.prereqs;
+      const aprobado = aprobadas.has(code);
+
+      ramo.classList.remove("desbloqueada");
+
+      if (!aprobado && prereqs) {
+        const listo = prereqs.split(",").every(p => aprobadas.has(p.trim()));
+        if (listo) {
+          ramo.classList.remove("gris");
+          ramo.classList.add("desbloqueada");
+        } else {
+          ramo.classList.remove("desbloqueada");
+          ramo.classList.add("gris");
+        }
+      }
+
+      if (!prereqs && !aprobado) {
+        ramo.classList.add("gris");
+      }
+    });
+  }
+
+  function guardarEstado() {
+    localStorage.setItem("aprobadas", JSON.stringify(Array.from(aprobadas)));
+  }
+
+  // Botón para reiniciar malla
+  const resetBtn = document.createElement("button");
+  resetBtn.textContent = "Restablecer Malla";
+  resetBtn.classList.add("reset-button");
+  document.body.insertBefore(resetBtn, document.querySelector(".grid-semestres"));
+
+  resetBtn.addEventListener("click", () => {
+    if (confirm("¿Estás seguro de que deseas reiniciar la malla?")) {
+      localStorage.removeItem("aprobadas");
+      location.reload();
+    }
+  });
 });
