@@ -1,63 +1,47 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const ramos = document.querySelectorAll(".ramo");
 
-  ramos.forEach((ramo) => {
+  ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
-      toggleRamo(ramo);
+      if (ramo.classList.contains("bloqueado")) return;
+
+      ramo.classList.toggle("completado");
       updateAllRamos();
     });
   });
 
-  loadState();
-  updateAllRamos();
+  updateAllRamos(); // Inicializa estados al cargar
 });
 
-function toggleRamo(ramo) {
-  ramo.classList.toggle("completado");
-  saveState();
-}
-
+// Esta función actualiza el estado visual de todos los ramos según si sus prerrequisitos han sido completados
 function updateAllRamos() {
   const allRamos = document.querySelectorAll(".ramo");
 
-  allRamos.forEach((ramo) => {
+  allRamos.forEach(ramo => {
     const prereqs = ramo.dataset.prereqs;
     if (prereqs) {
       const codes = prereqs.split(",");
-      const allMet = codes.every((code) =>
+      const met = codes.every(code =>
         document.querySelector(`.ramo[data-code="${code}"]`)?.classList.contains("completado")
       );
-      ramo.style.opacity = allMet ? "1" : "0.4";
-      ramo.style.pointerEvents = allMet ? "auto" : "none";
+      if (met) {
+        ramo.classList.remove("bloqueado");
+        ramo.style.pointerEvents = "auto";
+      } else {
+        ramo.classList.add("bloqueado");
+        ramo.style.pointerEvents = "none";
+      }
     } else {
-      ramo.style.opacity = "1";
+      ramo.classList.remove("bloqueado");
       ramo.style.pointerEvents = "auto";
     }
   });
 }
 
-function saveState() {
-  const estado = {};
-  document.querySelectorAll(".ramo").forEach((ramo) => {
-    const code = ramo.dataset.code;
-    estado[code] = ramo.classList.contains("completado");
-  });
-  localStorage.setItem("estadoRamos", JSON.stringify(estado));
-}
-
-function loadState() {
-  const estado = JSON.parse(localStorage.getItem("estadoRamos") || "{}");
-  document.querySelectorAll(".ramo").forEach((ramo) => {
-    const code = ramo.dataset.code;
-    if (estado[code]) {
-      ramo.classList.add("completado");
-    }
-  });
-}
-
+// Reinicia la malla (quita todas las materias seleccionadas)
 function resetMalla() {
-  localStorage.removeItem("estadoRamos");
-  document.querySelectorAll(".ramo").forEach((ramo) => {
+  const allRamos = document.querySelectorAll(".ramo");
+  allRamos.forEach(ramo => {
     ramo.classList.remove("completado");
   });
   updateAllRamos();
