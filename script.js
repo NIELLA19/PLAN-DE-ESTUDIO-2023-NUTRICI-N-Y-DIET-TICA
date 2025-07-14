@@ -1,63 +1,38 @@
-// script.js
+// script.js document.addEventListener("DOMContentLoaded", () => { const ramos = document.querySelectorAll(".ramo");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const ramos = document.querySelectorAll(".ramo");
-  const aprobadas = new Set();
+function actualizarEstados() { ramos.forEach(ramo => { if (ramo.classList.contains("aprobada")) return;
 
-  // Inicializa todos los ramos como grises
-  ramos.forEach(ramo => {
-    ramo.classList.add("gris");
-  });
-
-  ramos.forEach(ramo => {
-    ramo.addEventListener("click", () => {
-      const code = ramo.dataset.code;
-      const prereqs = ramo.dataset.prereqs;
-      const yaAprobado = ramo.classList.contains("aprobada");
-
-      if (yaAprobado) {
-        // Si ya está aprobado, se desmarca
-        aprobadas.delete(code);
-        ramo.classList.remove("aprobada");
-        ramo.classList.add("gris");
-        actualizarEstado();
-        return;
-      }
-
-      // Verifica si tiene prerrequisitos y están aprobados
-      if (!prereqs || prereqs.split(",").every(p => aprobadas.has(p.trim()))) {
-        aprobadas.add(code);
-        ramo.classList.remove("gris", "desbloqueada");
-        ramo.classList.add("aprobada");
-        actualizarEstado();
-      } else {
-        alert("Debes aprobar los prerrequisitos: " + prereqs);
-      }
-    });
-  });
-
-  function actualizarEstado() {
-    ramos.forEach(ramo => {
-      const code = ramo.dataset.code;
-      const prereqs = ramo.dataset.prereqs;
-      const aprobado = aprobadas.has(code);
-
-      ramo.classList.remove("desbloqueada");
-
-      if (!aprobado && prereqs) {
-        const listo = prereqs.split(",").every(p => aprobadas.has(p.trim()));
-        if (listo) {
-          ramo.classList.remove("gris");
-          ramo.classList.add("desbloqueada");
-        } else {
-          ramo.classList.remove("desbloqueada");
-          ramo.classList.add("gris");
-        }
-      }
-
-      if (!prereqs && !aprobado) {
-        ramo.classList.add("gris");
-      }
-    });
+const prereqs = ramo.dataset.prereqs;
+  if (!prereqs) {
+    ramo.classList.add("desbloqueada");
+    return;
   }
+
+  if (prereqs === "ALL") {
+    const prevRamos = Array.from(ramos).filter(r => r !== ramo);
+    const allApproved = prevRamos.every(r => r.classList.contains("aprobada"));
+    if (allApproved) ramo.classList.add("desbloqueada");
+    return;
+  }
+
+  if (prereqs === "SEM8") {
+    const sem8Ramos = document.querySelectorAll('[data-code="COLECTIVOS"], [data-code="CLINICA"]');
+    const sem8Approved = Array.from(sem8Ramos).every(r => r.classList.contains("aprobada"));
+    if (sem8Approved) ramo.classList.add("desbloqueada");
+    return;
+  }
+
+  const codes = prereqs.split(',');
+  const aprobados = codes.every(code => {
+    const req = document.querySelector(`[data-code="${code}"]`);
+    return req && req.classList.contains("aprobada");
+  });
+  if (aprobados) ramo.classList.add("desbloqueada");
 });
+
+}
+
+ramos.forEach(ramo => { ramo.addEventListener("click", () => { if (!ramo.classList.contains("desbloqueada") && !ramo.classList.contains("aprobada")) return; ramo.classList.toggle("aprobada"); ramo.classList.remove("desbloqueada"); ramos.forEach(r => r.classList.remove("desbloqueada")); actualizarEstados(); }); });
+
+actualizarEstados(); });
+
