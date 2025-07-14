@@ -1,11 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   const ramos = document.querySelectorAll(".ramo");
 
+  // Restaurar materias seleccionadas desde localStorage
+  const guardadas = JSON.parse(localStorage.getItem("materiasCompletadas") || "[]");
+  guardadas.forEach(code => {
+    const ramo = document.querySelector(`.ramo[data-code="${code}"]`);
+    if (ramo) ramo.classList.add("completado");
+  });
+
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
       if (ramo.classList.contains("bloqueado")) return;
 
       ramo.classList.toggle("completado");
+      guardarMaterias();
       updateRamos();
     });
   });
@@ -20,7 +28,6 @@ function updateRamos() {
     const prereqs = ramo.dataset.prereqs;
 
     if (!prereqs) {
-      // SIN prerrequisitos = materia activa desde el inicio (morado claro)
       ramo.classList.remove("bloqueado");
       ramo.classList.add("inicial");
       ramo.style.pointerEvents = "auto";
@@ -44,10 +51,17 @@ function updateRamos() {
   });
 }
 
+function guardarMaterias() {
+  const completadas = Array.from(document.querySelectorAll(".ramo.completado"))
+    .map(ramo => ramo.dataset.code);
+  localStorage.setItem("materiasCompletadas", JSON.stringify(completadas));
+}
+
 function resetMalla() {
   const allRamos = document.querySelectorAll(".ramo");
   allRamos.forEach(ramo => {
     ramo.classList.remove("completado");
   });
+  localStorage.removeItem("materiasCompletadas");
   updateRamos();
 }
