@@ -1,81 +1,67 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-image: url("img/fondo-nutrias.png");
-  background-repeat: repeat;
-  background-size: 250px;
-  background-color: #eaf6fb;
-  color: #333;
-  padding: 2rem;
-  margin: 0;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f4f4f4;
 }
+
 h1 {
   text-align: center;
-  color: #6a1b9a;
+  color: #333;
 }
+
 .grid-semestres {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 1rem;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
+
 .semestre {
-  background-color: #fce4ec;
-  padding: 1rem;
+  background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  min-width: 230px;
-  flex-shrink: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 300px;
 }
+
 .semestre h2 {
-  text-align: center;
-  color: #6a1b9a;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  color: #007b83;
+  font-size: 18px;
 }
+
 .ramo {
-  padding: 0.6rem;
-  margin-bottom: 0.6rem;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  background-color: #eee;
-  transition: all 0.3s ease;
+  background-color: #e6e6e6;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
   cursor: pointer;
-  border: 2px solid transparent;
+  transition: background-color 0.3s;
 }
-.ramo.desbloqueada {
-  background-color: #ce93d8;
-  color: white;
-  border: 2px dashed #8e24aa;
-}
-.ramo.aprobada {
-  background-color: #f8bbd0;
-  color: white;
-  border: 2px dashed #ec407a;
-}
-.ramo.gris {
-  background-color: #ccc;
-  color: #555;
-  border: 1px solid #999;
-}
+
 .ramo:hover {
-  transform: scale(1.03);
+  background-color: #d1d1d1;
 }
-.reset-button {
-  margin: 2rem auto;
-  display: block;
-  padding: 0.6rem 1.2rem;
-  background-color: #ec407a;
-  color: white;
-  border: none;
-  border-radius: 10px;
+
+.ramo.activa {
+  background-color: #f8b6d2;
+  color: #000;
   font-weight: bold;
-  font-size: 1rem;
+}
+
+button.reset-button {
+  display: block;
+  margin: 30px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007b83;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.reset-button:hover {
-  background-color: #d81b60;
+
+button.reset-button:hover {
+  background-color: #005f66;
 }
