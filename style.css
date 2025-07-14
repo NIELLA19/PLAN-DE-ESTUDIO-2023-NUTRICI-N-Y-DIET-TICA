@@ -1,36 +1,3 @@
-/* style.css */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  padding: 20px;
-  color: #333;
-}
-
-h1 {
-  text-align: center;
-  color: #5a2a82;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.semestre {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.semestre h2 {
-  text-align: center;
-  background: #eee;
-  padding: 5px;
-  border-radius: 5px;
-}
-
 .ramo {
   padding: 10px;
   border-radius: 8px;
@@ -41,7 +8,6 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-/* Colores por estado */
 .gris {
   background-color: #d3d3d3;
   color: #000;
