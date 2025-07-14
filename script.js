@@ -3,46 +3,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
-      if (ramo.classList.contains("bloqueado")) return;
+      if (ramo.classList.contains("inactivo")) return;
 
       ramo.classList.toggle("completado");
-      updateAllRamos();
+      updateRamos();
     });
   });
 
-  updateAllRamos(); // Inicializa estados al cargar
+  updateRamos();
 });
 
-// Esta función actualiza el estado visual de todos los ramos según si sus prerrequisitos han sido completados
-function updateAllRamos() {
+function updateRamos() {
   const allRamos = document.querySelectorAll(".ramo");
 
   allRamos.forEach(ramo => {
     const prereqs = ramo.dataset.prereqs;
-    if (prereqs) {
+
+    if (!prereqs) {
+      // Materias SIN prerrequisitos → están activas desde el inicio
+      ramo.classList.remove("inactivo");
+      ramo.classList.add("bloqueado");
+      ramo.style.pointerEvents = "auto";
+    } else {
       const codes = prereqs.split(",");
-      const met = codes.every(code =>
+      const requisitosCumplidos = codes.every(code =>
         document.querySelector(`.ramo[data-code="${code}"]`)?.classList.contains("completado")
       );
-      if (met) {
+
+      if (requisitosCumplidos) {
+        ramo.classList.remove("inactivo");
         ramo.classList.remove("bloqueado");
         ramo.style.pointerEvents = "auto";
       } else {
-        ramo.classList.add("bloqueado");
+        ramo.classList.add("inactivo");
+        ramo.classList.remove("bloqueado");
         ramo.style.pointerEvents = "none";
       }
-    } else {
-      ramo.classList.remove("bloqueado");
-      ramo.style.pointerEvents = "auto";
     }
   });
 }
 
-// Reinicia la malla (quita todas las materias seleccionadas)
 function resetMalla() {
   const allRamos = document.querySelectorAll(".ramo");
   allRamos.forEach(ramo => {
     ramo.classList.remove("completado");
   });
-  updateAllRamos();
+  updateRamos();
 }
