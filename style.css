@@ -1,0 +1,44 @@
+/* style.css */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f4fc;
+  color: #4a0264;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h1 {
+  margin: 20px 0;
+  color: #7209b7;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ramo {
+  background-color: #e0bbf7;
+  border: 2px solid #7209b7;
+  border-radius: 10px;
+  padding: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.ramo:hover {
+  transform: scale(1.05);
+  background-color: #d5a9f5;
+}
+
+.ramo.aprobado {
+  background-color: #ffc1e3; /* Rosa clarito */
+  border-color: #b83280;
+  color: #720946;
+}
