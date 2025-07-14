@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const ramos = document.querySelectorAll(".ramo");
 
-  // Restaurar del localStorage
+  // Restaurar materias completadas desde localStorage
   const guardadas = JSON.parse(localStorage.getItem("materiasCompletadas") || "[]");
   guardadas.forEach(code => {
     const ramo = document.querySelector(`.ramo[data-code="${code}"]`);
@@ -29,7 +29,7 @@ function updateRamos() {
     const prereqs = ramo.dataset.prereqs;
 
     if (!prereqs) {
-      // Materia sin prerrequisitos
+      // Sin prerrequisitos → activa e inicial (morado)
       ramo.classList.remove("bloqueado");
       ramo.classList.add("inicial");
       ramo.style.pointerEvents = "auto";
@@ -40,13 +40,15 @@ function updateRamos() {
       );
 
       if (requisitosCumplidos) {
+        // Prerrequisitos cumplidos → activa y morada
         ramo.classList.remove("bloqueado");
-        ramo.classList.remove("inicial");
+        ramo.classList.add("inicial");
         ramo.style.pointerEvents = "auto";
       } else {
-        ramo.classList.remove("completado");
-        ramo.classList.remove("inicial");
+        // No cumple → bloqueada
         ramo.classList.add("bloqueado");
+        ramo.classList.remove("inicial");
+        ramo.style.pointerEvents = "none";
       }
     }
   });
