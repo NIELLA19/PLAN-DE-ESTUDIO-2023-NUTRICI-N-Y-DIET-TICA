@@ -1,67 +1,65 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  margin-bottom: 40px;
 }
 
 .grid-semestres {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  justify-content: center;
 }
 
 .semestre {
-  background-color: #ffffff;
+  background-color: #fff;
+  border: 2px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .semestre h2 {
-  margin-top: 0;
-  color: #007b83;
-  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #006699;
 }
 
 .ramo {
-  background-color: #e6e6e6;
-  padding: 8px;
-  margin: 5px 0;
+  background-color: #eee;
+  padding: 8px 10px;
+  margin: 6px 0;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .ramo:hover {
-  background-color: #d1d1d1;
+  background-color: #d0eaff;
 }
 
-.ramo.activa {
-  background-color: #f8b6d2;
+.ramo.completado {
+  background-color: #ffc2d1; /* rosado claro */
   color: #000;
-  font-weight: bold;
 }
 
 button.reset-button {
   display: block;
   margin: 30px auto;
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007b83;
-  color: #fff;
+  background-color: #006699;
+  color: white;
   border: none;
   border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 button.reset-button:hover {
-  background-color: #005f66;
+  background-color: #004466;
 }
