@@ -1,65 +1,64 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const ramos = document.querySelectorAll(".ramo");
-  const aprobadas = new Set(JSON.parse(localStorage.getItem("aprobadas") || "[]"));
+  const estadoGuardado = JSON.parse(localStorage.getItem("estadoRamos")) || {};
 
   function guardarEstado() {
-    localStorage.setItem("aprobadas", JSON.stringify(Array.from(aprobadas)));
+    const estadoActual = {};
+    ramos.forEach((ramo) => {
+      estadoActual[ramo.dataset.code] = ramo.classList.contains("aprobada");
+    });
+    localStorage.setItem("estadoRamos", JSON.stringify(estadoActual));
   }
 
   function actualizarEstado() {
-    ramos.forEach(ramo => {
+    ramos.forEach((ramo) => {
       const code = ramo.dataset.code;
-      const prereqs = ramo.dataset.prereqs?.split(",").map(p => p.trim()).filter(p => p);
+      const requisitos = ramo.dataset.prereqs ? ramo.dataset.prereqs.split(",") : [];
 
-      ramo.classList.remove("aprobada", "desbloqueada", "gris");
-
-      if (aprobadas.has(code)) {
+      if (estadoGuardado[code]) {
         ramo.classList.add("aprobada");
-      } else if (!prereqs || prereqs.length === 0) {
+        ramo.classList.remove("gris", "desbloqueada");
+        return;
+      }
+
+      if (requisitos.length === 0) {
         ramo.classList.add("desbloqueada");
-      } else if (prereqs.every(p => aprobadas.has(p))) {
-        ramo.classList.add("desbloqueada");
+        ramo.classList.remove("gris", "aprobada");
       } else {
-        ramo.classList.add("gris");
+        const requisitosCumplidos = requisitos.every((reqCode) => {
+          const reqRamo = document.querySelector(`.ramo[data-code="${reqCode}"]`);
+          return reqRamo && reqRamo.classList.contains("aprobada");
+        });
+        if (requisitosCumplidos) {
+          ramo.classList.add("desbloqueada");
+          ramo.classList.remove("gris", "aprobada");
+        } else {
+          ramo.classList.add("gris");
+          ramo.classList.remove("desbloqueada", "aprobada");
+        }
       }
     });
   }
 
-  ramos.forEach(ramo => {
-    const code = ramo.dataset.code;
-
+  ramos.forEach((ramo) => {
     ramo.addEventListener("click", () => {
-      const prereqs = ramo.dataset.prereqs?.split(",").map(p => p.trim()).filter(p => p);
-      const aprobado = aprobadas.has(code);
-
-      if (aprobado) {
-        aprobadas.delete(code);
-      } else {
-        if (!prereqs || prereqs.every(p => aprobadas.has(p))) {
-          aprobadas.add(code);
-        } else {
-          alert("Debes aprobar los prerrequisitos: " + prereqs.join(", "));
-          return;
-        }
+      if (!ramo.classList.contains("gris")) {
+        ramo.classList.toggle("aprobada");
+        guardarEstado();
+        actualizarEstado();
       }
-
-      guardarEstado();
-      actualizarEstado();
     });
   });
 
-  // Botón de reinicio
-  const resetBtn = document.createElement("button");
-  resetBtn.textContent = "Restablecer Malla";
-  resetBtn.className = "reset-button";
-  document.body.insertBefore(resetBtn, document.querySelector(".grid-semestres"));
-
-  resetBtn.addEventListener("click", () => {
-    if (confirm("¿Deseas reiniciar la malla?")) {
-      localStorage.removeItem("aprobadas");
-      location.reload();
-    }
+  const botonReset = document.createElement("button");
+  botonReset.textContent = "Reiniciar selección";
+  botonReset.className = "reset-button";
+  botonReset.addEventListener("click", () => {
+    localStorage.removeItem("estadoRamos");
+    ramos.forEach((r) => r.classList.remove("aprobada"));
+    actualizarEstado();
   });
 
+  document.body.appendChild(botonReset);
   actualizarEstado();
 });
