@@ -17,12 +17,13 @@ h1 {
   color: #6a1b9a;
 }
 
-/* Contenedor de columnas por semestre */
+/* Contenedor de columnas por semestre (horizontal) */
 .grid-semestres {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 1rem;
-  justify-content: center;
+  justify-content: start;
 }
 
 /* Cada columna de semestre */
@@ -32,6 +33,7 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   min-width: 230px;
+  flex-shrink: 0;
 }
 
 /* Título del semestre */
@@ -55,7 +57,7 @@ h1 {
   border: 2px solid transparent;
 }
 
-/* Ramos desbloqueados sin prerrequisitos */
+/* Ramos desbloqueados (sin requisitos) */
 .ramo.desbloqueada {
   background-color: #ce93d8; /* morado claro */
   color: white;
@@ -98,3 +100,4 @@ h1 {
 
 .reset-button:hover {
   background-color: #d81b60;
+}
