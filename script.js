@@ -9,10 +9,8 @@ document.addEventListener("DOMContentLoaded", () => { const ramos = document.que
 // Si ya fue aprobado, lo quitamos
   if (yaAprobado) {
     aprobadas.delete(code);
-    ramo.classList.remove("aprobada");
+    ramo.classList.remove("aprobada", "desbloqueada");
     ramo.classList.add("gris");
-    // Reinicializa todos y vuelve a evaluar
-    ramos.forEach(r => r.classList.add("gris"));
     actualizarEstado();
     return;
   }
@@ -32,12 +30,21 @@ document.addEventListener("DOMContentLoaded", () => { const ramos = document.que
 
 function actualizarEstado() { ramos.forEach(ramo => { const code = ramo.dataset.code; const prereqs = ramo.dataset.prereqs; const yaAprobado = aprobadas.has(code);
 
-if (!yaAprobado && prereqs) {
+ramo.classList.remove("desbloqueada");
+
+  if (!yaAprobado && prereqs) {
     const listo = prereqs.split(',').every(p => aprobadas.has(p.trim()));
     if (listo) {
       ramo.classList.remove("gris");
       ramo.classList.add("desbloqueada");
+    } else {
+      ramo.classList.remove("desbloqueada");
+      ramo.classList.add("gris");
     }
+  }
+
+  if (!prereqs && !yaAprobado) {
+    ramo.classList.add("gris");
   }
 });
 
