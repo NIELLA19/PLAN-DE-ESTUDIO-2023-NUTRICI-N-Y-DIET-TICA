@@ -1,26 +1,100 @@
-/* style.css */
+/* Fondo de página con patrón de nutrias nutricionistas */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url("https://cdn.openai.com/chat-assets/user-uploads/file_00000000238861f8ba5db3740f2de93a.png");
+  background-repeat: repeat;
+  background-size: 250px;
+  background-color: #eaf6fb; /* azul muy claro */
+  color: #333;
+  padding: 2rem;
+  margin: 0;
+  min-height: 100vh;
+}
 
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f8ff; color: #333; padding: 2rem; margin: 0; }
+/* Título */
+h1 {
+  text-align: center;
+  color: #6a1b9a;
+}
 
-h1 { text-align: center; color: #5e35b1; }
+/* Contenedor de columnas por semestre */
+.grid-semestres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
 
-.grid-semestres { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+/* Cada columna de semestre */
+.semestre {
+  background-color: #fce4ec; /* rosado claro */
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  min-width: 230px;
+}
 
-.semestre { background-color: #f3e5f5; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
+/* Título del semestre */
+.semestre h2 {
+  text-align: center;
+  color: #6a1b9a;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
 
-.semestre h2 { text-align: center; color: #6a1b9a; font-size: 1.2rem; margin-bottom: 1rem; }
+/* Materias (ramos) */
+.ramo {
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  background-color: #eee;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
 
-.ramo { background-color: #e0e0e0; /* Estado inicial: gris */ border: 1px solid #ccc; padding: 0.7rem; margin-bottom: 0.6rem; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
+/* Ramos desbloqueados sin prerrequisitos */
+.ramo.desbloqueada {
+  background-color: #ce93d8; /* morado claro */
+  color: white;
+  border: 2px dashed #8e24aa;
+}
 
-.ramo.aprobada { background-color: #f8bbd0; /* Rosa claro */ border-color: #f48fb1; }
+/* Ramos aprobados */
+.ramo.aprobada {
+  background-color: #f8bbd0; /* rosado claro */
+  color: white;
+  border: 2px dashed #ec407a;
+}
 
-.ramo.desbloqueada { background-color: #ce93d8; /* Morado claro */ border-color: #ba68c8; }
+/* Ramos bloqueados */
+.ramo.gris {
+  background-color: #ccc;
+  color: #555;
+  border: 1px solid #999;
+}
 
-.ramo.gris { background-color: #e0e0e0; color: #777; }
+/* Hover */
+.ramo:hover {
+  transform: scale(1.03);
+}
 
-.ramo:hover { transform: scale(1.03); }
+/* Botón de reinicio */
+.reset-button {
+  margin: 2rem auto;
+  display: block;
+  padding: 0.6rem 1.2rem;
+  background-color: #ec407a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-/* Botón de reinicio */ .reset-button { margin: 1rem auto; display: block; padding: 0.6rem 1.2rem; background-color: #ccc; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-.reset-button:hover { background-color: #bbb; }
-
+.reset-button:hover {
+  background-color: #d81b60;
