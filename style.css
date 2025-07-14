@@ -1,16 +1,38 @@
-.ramo {
-  padding: 10px;
-  border-radius: 8px;
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fef9ff;
+  color: #333;
+  padding: 20px;
+}
+
+h1 {
   text-align: center;
+  color: #6a1b9a;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.ramo {
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  transition: background-color 0.3s ease;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+  color: #4b0082;
+  border: 2px solid #ccc;
+  transition: all 0.3s ease;
 }
 
 .gris {
-  background-color: #d3d3d3;
-  color: #000;
+  background-color: #e0e0e0;
 }
 
 .aprobada {
