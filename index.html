@@ -98,18 +98,23 @@
     <!-- SEMESTRE VIII -->
     <div class="semestre">
       <h2>Semestre VIII</h2>
-      <div class="ramo" data-code="COLECTIVOS" data-prereqs="ALL">Práctica en Servicios de Alimentación para Colectivos</div>
-      <div class="ramo" data-code="CLINICA" data-prereqs="ALL">Práctica de Nutrición Clínica</div>
+      <div class="ramo" data-code="COLECTIVOS" data-prereqs="BIOG,LABBIO,FUNDNUT,ALIMVEG,FARIA,ING1,DEP,COM,MORFO,FISIO,BIOQ,NUTB,ALIMAN,ING2,PATOC,MICCLIN,FISMADRE,EVAL,BIOEST,ING3,FARM,MICROALIM,FISADUL,SALPUB,INFO,SOCIO1,AMBIENTAL,ALIMTEC,NUTNIÑ,EDUNUT,PROY1,EDUSA,SOCIO2,PAZ,INF,PROFAN1,PROFAN2,EMP,NUTADULT,EPID,PROY2,ETICA,PROFAN3,MERCADO,EMP2,AGRO,SEG,PROY3,DEPORTE,BOETICA">
+        Práctica en Servicios de Alimentación para Colectivos
+      </div>
+      <div class="ramo" data-code="CLINICA" data-prereqs="BIOG,LABBIO,FUNDNUT,ALIMVEG,FARIA,ING1,DEP,COM,MORFO,FISIO,BIOQ,NUTB,ALIMAN,ING2,PATOC,MICCLIN,FISMADRE,EVAL,BIOEST,ING3,FARM,MICROALIM,FISADUL,SALPUB,INFO,SOCIO1,AMBIENTAL,ALIMTEC,NUTNIÑ,EDUNUT,PROY1,EDUSA,SOCIO2,PAZ,INF,PROFAN1,PROFAN2,EMP,NUTADULT,EPID,PROY2,ETICA,PROFAN3,MERCADO,EMP2,AGRO,SEG,PROY3,DEPORTE,BOETICA">
+        Práctica de Nutrición Clínica
+      </div>
     </div>
 
     <!-- SEMESTRE IX -->
     <div class="semestre">
       <h2>Semestre IX</h2>
-      <div class="ramo" data-code="PRACPUB" data-prereqs="SEM8">Práctica en Nutrición Pública</div>
-      <div class="ramo" data-code="GRADO" data-prereqs="SEM8">Trabajo de Grado</div>
+      <div class="ramo" data-code="PRACPUB" data-prereqs="COLECTIVOS,CLINICA">Práctica en Nutrición Pública</div>
+      <div class="ramo" data-code="GRADO" data-prereqs="COLECTIVOS,CLINICA">Trabajo de Grado</div>
     </div>
 
   </div>
+  <button class="reset-button" onclick="resetMalla()">Reiniciar Malla</button>
   <script src="script.js"></script>
 </body>
 </html>
