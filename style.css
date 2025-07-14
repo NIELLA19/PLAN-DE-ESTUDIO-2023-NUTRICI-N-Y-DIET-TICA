@@ -48,13 +48,13 @@ h1 {
   color: black;
 }
 
-/* Materias SIN prerrequisitos (morado claro) */
+/* Materias SIN prerrequisitos (iniciales): morado claro */
 .ramo.inicial {
   background-color: #e5d5f7;
   color: #333;
 }
 
-/* Materias bloqueadas por prerrequisitos no cumplidos */
+/* Materias bloqueadas (grisáceas y no clicables) */
 .ramo.bloqueado {
   background-color: #ddd;
   color: #888;
